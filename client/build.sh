@@ -2,8 +2,8 @@
 
 echo "Cleaning bin directory"
 
-rm -sr ./bin/*
-
+rm -r ./bin
+mkdir bin
 
 echo "Compiling files"
 
