@@ -4,14 +4,18 @@ import java.net.DatagramSocket;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 
+import net.DatagramPacketFactory;
+import net.PacketProcessor;
+import net.PacketType;
+
 public class Receiver
 {
 
 	private static String SERVER_IP = "";
 	private static int SERVER_APP_PORT = 8765;
 
-	private boolean mStopReceiving;
-
+	private DatagramSocket mReceiverSocket; 
+	
 	public Receiver()
 	{
 	}
@@ -20,22 +24,28 @@ public class Receiver
 	{
 		try
 		{
-			DatagramSocket receiverSocket = new DatagramSocket(Receiver.SERVER_APP_PORT);
-			byte[] buff = new byte[256];
-			DatagramPacket receivedPacket = new DatagramPacket(buff, buff.length);	
+			this.mReceiverSocket = new DatagramSocket(Receiver.SERVER_APP_PORT);
+			DatagramPacket receivedPacket = DatagramPacketFactory.newDatagramPacket();	
 			InetAddress currPacAddr = null;
-			System.out.println("Starting infinite loop to listen for incomming packets");
+
+			System.out.println("Listening for incomming packets");
+			
 			while(true)
 			{	
-				receiverSocket.receive(receivedPacket);
-				currPacAddr = receivedPacket.getAddress();
-				System.out.println("packet received with src addr - " + currPacAddr.getHostName());
+				this.mReceiverSocket.receive(receivedPacket);
+				System.out.println("Receiver - " + receivedPacket.getAddress().getHostAddress());
+				PacketType type = PacketProcessor.processPacket(this.mReceiverSocket, receivedPacket);	
 			}
 		}
 		catch(Exception ex)
 		{
 			System.out.println("Receiver initialization failed because of the following exception - ");
 			ex.printStackTrace();
+		}
+		finally
+		{
+			System.out.println("Closing socket as code terminated due to some problem");
+			this.mReceiverSocket.close();
 		}
 	}
 
