@@ -1,0 +1,23 @@
+<project name="IpSpoofDetection" default="cleanbuildrun">
+
+	<target name="clean">
+		<delete dir="bin"></delete>
+		<mkdir dir="bin"></mkdir>
+	</target>
+
+	<target name="build">
+		<javac srcdir="src" destdir="bin"></javac>
+	</target>
+
+	<target name="cleanbuild" depends="clean, build">
+	</target>
+
+	<target name="cleanbuildrun" depends="cleanbuild">
+		<java classname="main.Main">
+			<classpath>
+				<pathelement location="bin"></pathelement>
+			</classpath>
+		</java>
+	</target>
+
+</project>
