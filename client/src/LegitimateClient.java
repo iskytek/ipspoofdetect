@@ -9,7 +9,7 @@ public class LegitimateClient
 
 	private static int CLIENT_PORT = 8764;
 	private static int SERVER_PORT = 8765;
-	private static String SERVER_IP = "127.0.0.1";
+	private static String SERVER_IP = "169.254.59.224";
 
 	public static void initialize()
 	{
