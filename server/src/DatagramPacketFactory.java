@@ -17,19 +17,35 @@ public class DatagramPacketFactory
 	
 	public static DatagramPacket newDatagramACKPacket(InetAddress addr, int host)
 	{
+		DatagramPacket newPacket = null;
+		try
+		{
 		String ackString = "ACK";
-		byte[] buff = ackString.getBytes();
+		byte[] buff = ackString.getBytes("utf-8");
 		//InetAddress addr = InetAddress.getByName(ipAddr);
-		DatagramPacket newPacket = new DatagramPacket(buff, buff.length, addr, host);
+		newPacket = new DatagramPacket(buff, buff.length, addr, host);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}		
 		return newPacket;
 	}
 
 	public static DatagramPacket newDatagramSYNPacket(InetAddress addr, int host)
 	{
+		DatagramPacket newPacket = null;
+		try
+		{
 		String synString = "SYN";
-		byte[] buff = synString.getBytes();
+		byte[] buff = synString.getBytes("utf-8");
 		//InetAddress addr = InetAddress.getByName(ipAddr);
-		DatagramPacket newPacket = new DatagramPacket(buff, buff.length, addr, host);
+		newPacket = new DatagramPacket(buff, buff.length, addr, host);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
 		return newPacket;
 	}
 
